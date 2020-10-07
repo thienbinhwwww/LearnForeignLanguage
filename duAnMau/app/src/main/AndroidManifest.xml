@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.duanmau">
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".chucNang.nguoiDung.chinhSuaThongTinActivity" />
+        <activity android:name=".chucNang.nguoiDung.doiPassActivity" />
+        <activity android:name=".chucNang.theLoai.theLoaiActivity" />
+        <activity android:name=".chucNang.nguoiDung.nguoiDungActivity" />
+        <activity android:name=".taiKhoan.quenPassActivity" />
+        <activity android:name=".taiKhoan.dangKyActivity" />
+        <activity
+            android:name=".chucNang.doanhThu.quanLyDoanhThuActivity"
+            android:label="Doanh thu" />
+        <activity
+            android:name=".chucNang.hoaDon.quanLyHoaDonActivity"
+            android:label="Quản lý hóa đơn" />
+        <activity
+            android:name=".chucNang.khachHang.khackHangActivity"
+            android:label="Kho sách" />
+        <activity
+            android:name=".chucNang.qlSach.quanLySachActivity"
+            android:label="Quản lý sách" />
+        <activity
+            android:name=".mainActivity"
+            android:label="Quản lý cửa hàng" />
+        <activity android:name=".loginActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>

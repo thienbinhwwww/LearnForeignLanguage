@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.bookmanagement">
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/logop"
+        android:label="@string/app_name"
+        android:roundIcon="@drawable/logop"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity
+            android:label="Đổi mật khẩu"
+            android:name=".ma2_0.user.doiPasswordActivity"></activity>
+        <activity
+            android:label="Chỉnh sửa thông tin"
+            android:name=".ma2_0.user.ChinhSuaActivity" />
+        <activity
+            android:name=".ma2_0.theLoai.theLoaiActivity"
+            android:label="Thể loại sách" />
+        <activity
+            android:name=".ma2_0.user.nguoiDungActivity"
+            android:label="Người dùng" />
+        <activity
+            android:name=".ma2_0.doanhThu.quanLyDoanhThuActivity"
+            android:label="Doanh thu" />
+        <activity
+            android:name=".ma2_0.hoaDon.quanLyHoaDonActivity"
+            android:label="Hóa đơn" />
+        <activity
+            android:name=".ma2_0.topBanChay.topBanChayActivity"
+            android:label="Top bán chạy" />
+        <activity
+            android:name=".ma2_0.quanLySach.quanLySachActivity"
+            android:label="Sách" />
+        <activity
+            android:name=".man1_0.dangKyActivity"
+            android:label="Đăng ký tài khoản" />
+        <activity
+            android:name=".man1_0.quenPassActivity"
+            android:label="Lấy lại mật khẩu" />
+        <activity
+            android:name=".ma2_0.menuActivity"
+            android:label="Chức năng" />
+        <activity
+            android:name=".man1_0.loginActivity"
+            android:label="@string/layout_login_name" />
+        <activity android:name=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>
