@@ -42,7 +42,7 @@ public class Sqlite extends SQLiteOpenHelper {
 
 //        Tạo bảng thể loại
         String category = "CREATE TABLE category(" +
-                "idCategory INTEGER NOT NULL," +
+                "idCategory INTEGER NOT NULL ," +
                 "category TEXT," +
                 "PRIMARY KEY(idCategory))";
         db.execSQL(category);
@@ -51,6 +51,7 @@ public class Sqlite extends SQLiteOpenHelper {
         String bill = "CREATE TABLE bill(" +
                 "idBill INTEGER NOT NULL," +
                 "date TEXT," +
+                "time TEXT,"+
                 "PRIMARY KEY(idBill))";
         db.execSQL(bill);
 
@@ -67,20 +68,14 @@ public class Sqlite extends SQLiteOpenHelper {
 
 //        Tạo bảng người dùng
         String uses = "CREATE TABLE uses(" +
-                "isUses INTEGER NOT NULL," +
+                "idUses INTEGER NOT NULL," +
                 "usesName TEXT," +
                 "password TEXT," +
                 "email TEXT," +
                 "PRIMARY KEY(idUses))";
         db.execSQL(uses);
     }
-    public void themSach(){
 
-    }
-
-    public void addBook(uses uses){
-
-    }
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 

@@ -12,20 +12,25 @@ import android.widget.Toast;
 
 import com.example.bookmanagement.R;
 import com.example.bookmanagement.Sql.Database;
+import com.example.bookmanagement.Sql.Sqlite;
+import com.example.bookmanagement.Sql.usesDao;
 import com.example.bookmanagement.model.uses;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class quenPassActivity extends AppCompatActivity {
     final String DATABASE_NAME = "bookManagementData.sqlite";
     SQLiteDatabase database;
-    ArrayList<uses> list = new ArrayList<>();
+    List<uses> list = new ArrayList<>();
+    final Sqlite sqlite= new Sqlite(this);;
+    final com.example.bookmanagement.Sql.usesDao usesDao = new usesDao(sqlite);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quen_pass);
-        readDataUses();
+        list = usesDao.getAllUsers();
     }
 
     public void layPass(View view){
@@ -58,36 +63,15 @@ public class quenPassActivity extends AppCompatActivity {
                 Toast.makeText(quenPassActivity.this,"Emai không tồn tại",Toast.LENGTH_LONG).show();
                 dieuKien = false;
             }
-
         }
         if(dieuKien){
             list.get(index).setPassword(edt_pass.getText().toString());
 
-            ContentValues contentValues = new ContentValues();
-            contentValues.put("idUses",usesID);
-            contentValues.put("usesName",list.get(index).getUsesName());
-            contentValues.put("password",list.get(index).getPassword());
-            contentValues.put("email",list.get(index).getGmail());
-            SQLiteDatabase database = Database.initDatabase(this,"data2.sqlite");
-            database.update("uses",contentValues,"idUses ="+new int[]{usesID},null);
-
-
-            Toast.makeText(quenPassActivity.this,"Lấy lại mật khẩu thành công",Toast.LENGTH_LONG).show();
+            boolean dkTemp = usesDao.updateUses(new uses(usesID,list.get(index).getUsesName(),list.get(index).getPassword(),list.get(index).getGmail()));
+            if (dkTemp){
+                Toast.makeText(quenPassActivity.this,"Lấy lại mật khẩu thành công",Toast.LENGTH_LONG).show();
+            }
         }
     }
-    private void readDataUses() {
-        database = Database.initDatabase(this, DATABASE_NAME);
-        Cursor cursor = database.rawQuery("SELECT * FROM uses", null);
-        list.clear();
-        cursor.moveToFirst();
-        while (!cursor.isAfterLast()) {
-            int ID = cursor.getInt(0);
-            String Name = cursor.getString(1);
-            String pass = cursor.getString(2);
-            String email = cursor.getString(3);
-            list.add(new uses(ID, Name, pass,email));
-            cursor.moveToNext();
-        }
-        cursor.close();
-    }
+
 }

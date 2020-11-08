@@ -9,12 +9,15 @@
         android:roundIcon="@drawable/logop"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".ma2_0.hoaDon.hoaDonChiTiet.themHoaHDChiTietActivity"></activity>
+        <activity android:name=".ma2_0.hoaDon.hoaDonChiTiet.hoaDonChiTietActivity" />
+        <activity android:name=".ma2_0.hoaDon.themHoaDonActivity" />
         <activity
-            android:label="Đổi mật khẩu"
-            android:name=".ma2_0.user.doiPasswordActivity"></activity>
+            android:name=".ma2_0.user.doiPasswordActivity"
+            android:label="Đổi mật khẩu" />
         <activity
-            android:label="Chỉnh sửa thông tin"
-            android:name=".ma2_0.user.ChinhSuaActivity" />
+            android:name=".ma2_0.user.ChinhSuaActivity"
+            android:label="Chỉnh sửa thông tin" />
         <activity
             android:name=".ma2_0.theLoai.theLoaiActivity"
             android:label="Thể loại sách" />
@@ -48,7 +51,6 @@
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

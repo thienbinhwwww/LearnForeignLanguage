@@ -16,15 +16,20 @@ import android.widget.Toast;
 
 import com.example.bookmanagement.R;
 import com.example.bookmanagement.Sql.Database;
+import com.example.bookmanagement.Sql.Sqlite;
+import com.example.bookmanagement.Sql.usesDao;
 import com.example.bookmanagement.ma2_0.menuActivity;
 import com.example.bookmanagement.model.uses;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class loginActivity extends AppCompatActivity {
     final String DATABASE_NAME = "bookManagementData.sqlite";
     SQLiteDatabase database;
-    ArrayList<uses> list = new ArrayList<>();
+    List<uses> list = new ArrayList<>();
+    final Sqlite sqlite= new Sqlite(this);
+    final usesDao usesDao = new usesDao(sqlite);
 
     SharedPreferences sharedPreferences;
     @Override
@@ -32,9 +37,9 @@ public class loginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        list = usesDao.getAllUsers();
 
 
-        readDataUses();
         su_kien();
     }
 
@@ -112,19 +117,5 @@ public class loginActivity extends AppCompatActivity {
 
 
     }
-    private void readDataUses() {
-        database = Database.initDatabase(this, DATABASE_NAME);
-        Cursor cursor = database.rawQuery("SELECT * FROM uses", null);
-        list.clear();
-        cursor.moveToFirst();
-        while (!cursor.isAfterLast()) {
-            int ID = cursor.getInt(0);
-            String Name = cursor.getString(1);
-            String pass = cursor.getString(2);
-            String email = cursor.getString(3);
-            list.add(new uses(ID, Name, pass,email));
-            cursor.moveToNext();
-        }
-        cursor.close();
-    }
+
 }

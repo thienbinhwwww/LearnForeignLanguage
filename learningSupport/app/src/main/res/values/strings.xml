@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">learningSupport</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="fb_app_id">693828154564740</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>

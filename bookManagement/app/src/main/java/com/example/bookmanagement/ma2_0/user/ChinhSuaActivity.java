@@ -15,22 +15,27 @@ import android.widget.Toast;
 
 import com.example.bookmanagement.R;
 import com.example.bookmanagement.Sql.Database;
+import com.example.bookmanagement.Sql.Sqlite;
+import com.example.bookmanagement.Sql.usesDao;
 import com.example.bookmanagement.model.uses;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ChinhSuaActivity extends AppCompatActivity {
 
     final String DATABASE_NAME = "bookManagementData.sqlite";
     SQLiteDatabase database;
-    ArrayList<uses> list = new ArrayList<>();
+    List<uses> list = new ArrayList<>();
+    final Sqlite sqlite= new Sqlite(this);;
+    final com.example.bookmanagement.Sql.usesDao usesDao = new usesDao(sqlite);
     SharedPreferences sha,sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chinh_sua);
-        readDataUses();
+        list = usesDao.getAllUsers();
         suKien();
     }
 
@@ -50,7 +55,6 @@ public class ChinhSuaActivity extends AppCompatActivity {
 
         tv_usesName.setText(list.get(index).getUsesName());
         tv_email.setText(list.get(index).getGmail());
-
 
         Button btn_huy = findViewById(R.id.btn_nguoiDung_chinhSua_huy);
         btn_huy.setOnClickListener(new View.OnClickListener() {
@@ -83,25 +87,22 @@ public class ChinhSuaActivity extends AppCompatActivity {
                 }
                 if(ktraName) {
                     if(ktraEmail) {
-                        ContentValues contentValues = new ContentValues();
-                        contentValues.put("idUses", id);
-                        contentValues.put("usesName", tv_usesName.getText().toString());
-                        contentValues.put("password", list.get(finalIndex).getPassword());
-                        contentValues.put("email", tv_email.getText().toString());
-                        SQLiteDatabase database = Database.initDatabase(ChinhSuaActivity.this, DATABASE_NAME);
-                        database.update("uses", contentValues, "idUses = " + id, null);
 
-                        sharedPreferences = getSharedPreferences("phong", MODE_PRIVATE);
-                        SharedPreferences.Editor editor = sharedPreferences.edit();
-                        editor.putString("userName", tv_usesName.getText().toString());
-                        sha = getSharedPreferences("uses", MODE_PRIVATE);
-                        SharedPreferences.Editor edi = sha.edit();
-                        edi.putString("email", tv_email.getText().toString());
-                        edi.commit();
+                        boolean ktTemp = usesDao.updateUses(new uses(id, tv_usesName.getText().toString(), list.get(finalIndex).getPassword(), tv_email.getText().toString()));
 
-                        Intent intent = new Intent(ChinhSuaActivity.this, nguoiDungActivity.class);
-                        startActivity(intent);
-                        Toast.makeText(ChinhSuaActivity.this,"Chỉnh sửa thành công",Toast.LENGTH_LONG).show();
+                        if(ktTemp) {
+                            sharedPreferences = getSharedPreferences("phong", MODE_PRIVATE);
+                            SharedPreferences.Editor editor = sharedPreferences.edit();
+                            editor.putString("userName", tv_usesName.getText().toString());
+                            sha = getSharedPreferences("uses", MODE_PRIVATE);
+                            SharedPreferences.Editor edi = sha.edit();
+                            edi.putString("email", tv_email.getText().toString());
+                            edi.commit();
+
+                            Intent intent = new Intent(ChinhSuaActivity.this, nguoiDungActivity.class);
+                            startActivity(intent);
+                            Toast.makeText(ChinhSuaActivity.this, "Chỉnh sửa thành công", Toast.LENGTH_LONG).show();
+                        }
                     }else {
                         Toast.makeText(ChinhSuaActivity.this,"Email đã tồn tại",Toast.LENGTH_LONG).show();
                     }
@@ -109,23 +110,6 @@ public class ChinhSuaActivity extends AppCompatActivity {
                     Toast.makeText(ChinhSuaActivity.this,"Tên đăng nhập đã tồn tại",Toast.LENGTH_LONG).show();
                 }
             }
-
         });
     }
-    private void readDataUses() {
-        database = Database.initDatabase(this, DATABASE_NAME);
-        Cursor cursor = database.rawQuery("SELECT * FROM uses", null);
-        list.clear();
-        cursor.moveToFirst();
-        while (!cursor.isAfterLast()) {
-            int ID = cursor.getInt(0);
-            String Name = cursor.getString(1);
-            String pass = cursor.getString(2);
-            String email = cursor.getString(3);
-            list.add(new uses(ID, Name, pass,email));
-            cursor.moveToNext();
-        }
-        cursor.close();
-    }
-
 }

@@ -14,15 +14,21 @@ import android.widget.Toast;
 
 import com.example.bookmanagement.R;
 import com.example.bookmanagement.Sql.Database;
+import com.example.bookmanagement.Sql.Sqlite;
+import com.example.bookmanagement.Sql.usesDao;
+import com.example.bookmanagement.model.book;
 import com.example.bookmanagement.model.uses;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class dangKyActivity extends AppCompatActivity {
     final String DATABASE_NAME = "bookManagementData.sqlite";
     SQLiteDatabase database;
-    ArrayList<uses> list = new ArrayList<>();
+    List<uses> list = new ArrayList<>();
+    final Sqlite sqlite= new Sqlite(this);;
+    final com.example.bookmanagement.Sql.usesDao usesDao = new usesDao(sqlite);
     SharedPreferences sharedPreferences;
 
 
@@ -30,7 +36,8 @@ public class dangKyActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dang_ky);
-        readDataUses();
+
+        list = usesDao.getAllUsers();
 
     }
 
@@ -67,44 +74,29 @@ public class dangKyActivity extends AppCompatActivity {
         }
 
         if (dieuKien){
-            ContentValues contentValues = new ContentValues();
-            contentValues.put("idUses",Integer.parseInt(edt_id.getText().toString()));
-            contentValues.put("usesName",edt_usesName.getText().toString());
-            contentValues.put("password",edt_pass.getText().toString());
-            contentValues.put("email",edt_gmail.getText().toString());
 
-            SQLiteDatabase database = Database.initDatabase(this,DATABASE_NAME);
-            database.insert("uses",null,contentValues);
-
-            readDataUses();
-            Toast.makeText(dangKyActivity.this,"Đăng ký thành công",Toast.LENGTH_LONG).show();
-            Intent intent = new Intent(this,loginActivity.class);
-
-            sharedPreferences =getSharedPreferences("phong",MODE_PRIVATE);
-            SharedPreferences.Editor editor = sharedPreferences.edit();
-            String user = edt_usesName.getText().toString();
+            int id = Integer.parseInt(edt_id.getText().toString());
+            String name = edt_usesName.getText().toString();
             String pass = edt_pass.getText().toString();
-            editor.putString("userName", user);
-            editor.putString("password", pass);
-            editor.putBoolean("save", true);
-            editor.commit();
-            startActivity(intent);
+            String email = edt_gmail.getText().toString();
+
+            boolean addTemp = usesDao.addUser(new uses(id,name,pass,email));
+
+            if (addTemp){
+                list = usesDao.getAllUsers();
+                Toast.makeText(dangKyActivity.this,"Đăng ký thành công",Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(this,loginActivity.class);
+                sharedPreferences =getSharedPreferences("phong",MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                String user = edt_usesName.getText().toString();
+                String passt = edt_pass.getText().toString();
+                editor.putString("userName", user);
+                editor.putString("password", passt);
+                editor.putBoolean("save", true);
+                editor.commit();
+                startActivity(intent);
+            }
         }
-    }
-    private void readDataUses() {
-        database = Database.initDatabase(this, DATABASE_NAME);
-        Cursor cursor = database.rawQuery("SELECT * FROM uses", null);
-        list.clear();
-        cursor.moveToFirst();
-        while (!cursor.isAfterLast()) {
-            int ID = cursor.getInt(0);
-            String Name = cursor.getString(1);
-            String pass = cursor.getString(2);
-            String email = cursor.getString(3);
-            list.add(new uses(ID, Name, pass,email));
-            cursor.moveToNext();
-        }
-        cursor.close();
     }
 
 }

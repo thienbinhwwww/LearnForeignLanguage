@@ -13,21 +13,26 @@ import android.widget.Toast;
 
 import com.example.bookmanagement.R;
 import com.example.bookmanagement.Sql.Database;
+import com.example.bookmanagement.Sql.Sqlite;
+import com.example.bookmanagement.Sql.usesDao;
 import com.example.bookmanagement.model.uses;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class doiPasswordActivity extends AppCompatActivity {
     final String DATABASE_NAME = "bookManagementData.sqlite";
     SQLiteDatabase database;
-    ArrayList<uses> list = new ArrayList<>();
+    List<uses> list = new ArrayList<>();
+    final Sqlite sqlite= new Sqlite(this);;
+    final com.example.bookmanagement.Sql.usesDao usesDao = new usesDao(sqlite);
     SharedPreferences sha,sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_doi_password);
-        readDataUses();
+        list = usesDao.getAllUsers();
         suKien();
     }
 
@@ -48,7 +53,6 @@ public class doiPasswordActivity extends AppCompatActivity {
                         index = i;
                     }
                 }
-
                 boolean ktra = true;
 
                 if(!tv_pass.getText().toString().equals(list.get(index).getPassword())){
@@ -61,9 +65,9 @@ public class doiPasswordActivity extends AppCompatActivity {
                 }
                 if (ktra){
                     list.get(index).setPassword(tv_passMoi.getText().toString());
+                    boolean ktTemp = usesDao.updateUses(list.get(index));
                     Toast.makeText(doiPasswordActivity.this,"Đã đổi mật khẩu thành công",Toast.LENGTH_LONG).show();
                 }
-
             }
         });
         Button btn_huy = findViewById(R.id.btn_nguoiDung_doiPass_huy);
@@ -74,21 +78,4 @@ public class doiPasswordActivity extends AppCompatActivity {
             }
         });
     }
-
-    private void readDataUses() {
-        database = Database.initDatabase(this, DATABASE_NAME);
-        Cursor cursor = database.rawQuery("SELECT * FROM uses", null);
-        list.clear();
-        cursor.moveToFirst();
-        while (!cursor.isAfterLast()) {
-            int ID = cursor.getInt(0);
-            String Name = cursor.getString(1);
-            String pass = cursor.getString(2);
-            String email = cursor.getString(3);
-            list.add(new uses(ID, Name, pass,email));
-            cursor.moveToNext();
-        }
-        cursor.close();
-    }
-
 }

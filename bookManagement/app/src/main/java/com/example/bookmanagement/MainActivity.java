@@ -6,40 +6,26 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
 
 import com.example.bookmanagement.man1_0.loginActivity;
 
 public class MainActivity extends AppCompatActivity {
-    CountDownTimer timer;
+    ImageView imageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-                timer = new CountDownTimer(3000, 20) {
-
+        imageView = findViewById(R.id.imageView);
+        imageView.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onTick(long millisUntilFinished) {
-
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, loginActivity.class);
+                startActivity(intent);
             }
-
-            @Override
-            public void onFinish() {
-                try{
-                    Intent intent = new Intent(MainActivity.this, loginActivity.class);
-                    startActivity(intent);
-                }catch(Exception e){
-                    Log.e("Error", "Error: " + e.toString());
-                }
-            }
-        }.start();
-
-        timer.start();
+        });
 
     }
-
-
-
-
 }
