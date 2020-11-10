@@ -106,7 +106,6 @@
                 android:id="@+id/layout_menu_licchSuHoc"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:onClick="lichSuHoc"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/constraintLayout7"
                 app:layout_constraintStart_toEndOf="@+id/layuot_menu_baiHocTuDo"

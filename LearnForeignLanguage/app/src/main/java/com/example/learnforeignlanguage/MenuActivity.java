@@ -4,6 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.content.Intent;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 
@@ -36,8 +39,8 @@ public class MenuActivity extends AppCompatActivity {
 
 //    Chức năng bài học tự chọn
     public void  baiHocTuChon(View view){
-        Intent intent = new Intent(MenuActivity.this,UsesActivity.class);
-        startActivity(intent);
+        MediaPlayer mediaPlayer = MediaPlayer.create(this, Uri.parse("https://soundoftext.nyc3.digitaloceanspaces.com/24dd8160-c7d4-11e7-9df0-2f554923557b.mp3"));
+        mediaPlayer.start();
     }
 
 //    Chức năng lịch sử học
