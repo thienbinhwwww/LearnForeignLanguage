@@ -16,7 +16,7 @@
         android:layout_marginTop="56dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
-        android:background="@drawable/bacgrond_edt"
+        android:background="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnLogin" />
@@ -45,6 +45,7 @@
         android:layout_marginTop="58dp"
         android:layout_marginEnd="40dp"
         android:layout_marginRight="40dp"
+        android:background="@drawable/bacgrond_edt"
         app:boxStrokeWidth="0dp"
         app:counterEnabled="true"
         app:counterMaxLength="50"
@@ -57,8 +58,8 @@
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/bacgrond_edt"
-            android:hint="UserName" />
+            android:hint="UserName"
+            android:textColor="#000000" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -70,6 +71,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="40dp"
         android:layout_marginRight="40dp"
+        android:background="@drawable/bacgrond_edt"
         app:boxStrokeWidth="0dp"
         app:counterEnabled="true"
         app:counterMaxLength="50"
@@ -83,10 +85,10 @@
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/bacgrond_edt"
             android:focusable="auto"
             android:hint="PassWord"
             android:inputType="textPassword"
+            android:textColor="#000000"
             android:textIsSelectable="true" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -99,7 +101,7 @@
         android:layout_marginTop="64dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
-        android:background="@drawable/bogoc"
+        android:background="@drawable/bacgrond_den_duc"
         android:text="Đăng Nhập"
         app:layout_constraintEnd_toStartOf="@+id/button2"
         app:layout_constraintStart_toStartOf="parent"
@@ -114,7 +116,7 @@
         android:layout_marginTop="64dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
-        android:background="@drawable/bogoc"
+        android:background="@drawable/bacgrond_den_duc"
         android:text="Đăng Ký"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/btnLogin"

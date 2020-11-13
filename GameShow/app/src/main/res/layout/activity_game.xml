@@ -28,6 +28,7 @@
         android:layout_height="47dp"
         android:layout_marginTop="40dp"
         android:background="@drawable/bacgrond_edt_mo_duc"
+        android:onClick="createNewTeam"
         android:text="Tạo đội mới"
         app:backgroundTint="@color/white"
         app:layout_constraintBottom_toTopOf="@+id/textView18"
